@@ -2,20 +2,40 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: #000033;
     --foreground: #ededed;
   }
 }
 
+:root {
+  --background: #000033;
+  --foreground: #ededed;
+  --primary: #F37052;
+  --secondary: #1A1464;
+}
+
 body {
   color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  background: linear-gradient(to right, #000000, #1A1464);
+  min-height: 100vh;
+}
+
+.bg-maurc-gradient {
+  background: linear-gradient(to right, #000000, #1A1464);
+}
+
+/* Card styling with dark theme */
+.maurc-card {
+  @apply bg-maurc-darkblue/40 backdrop-blur-sm border border-maurc-blue/20 rounded-lg;
+}
+
+/* Button styling */
+.maurc-button {
+  @apply bg-maurc-orange hover:bg-maurc-orange/80 text-white px-4 py-2 rounded-md transition-colors;
+}
+
+.text-maurc-orange {
+  color: #F37052;
 }

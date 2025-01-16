@@ -4,92 +4,85 @@ import { useState } from 'react'
 import { Dialog, DialogPanel } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 
-
 const timeline = [
   {
-    name: 'Founded company',
+    name: 'Establishment of MAURC',
     description:
-      'Nihil aut nam. Dignissimos a pariatur et quos omnis. Aspernatur asperiores et dolorem dolorem optio voluptate repudiandae.',
-    date: 'Aug 2021',
-    dateTime: '2021-08',
+      'Founded as a premier research institution dedicated to understanding and shaping the future of African cities.',
+    date: 'Est. 2024',
+    dateTime: '2024-01',
   },
   {
-    name: 'Secured $65m in funding',
+    name: 'Research Network Development',
     description:
-      'Provident quia ut esse. Vero vel eos repudiandae aspernatur. Cumque minima impedit sapiente a architecto nihil.',
-    date: 'Dec 2021',
-    dateTime: '2021-12',
+      'Established partnerships with key research institutions and urban planning agencies across Africa.',
+    date: 'Ongoing',
+    dateTime: '2024-02',
   },
   {
-    name: 'Released beta',
+    name: 'Launch of Urban Studies Program',
     description:
-      'Sunt perspiciatis incidunt. Non necessitatibus aliquid. Consequatur ut officiis earum eum quia facilis. Hic deleniti dolorem quia et.',
-    date: 'Feb 2022',
-    dateTime: '2022-02',
+      'Initiated comprehensive research programs focusing on urban challenges, infrastructure, and social equity.',
+    date: '2024',
+    dateTime: '2024-03',
   },
   {
-    name: 'Global launch of product',
+    name: 'Media Partnership Program',
     description:
-      'Ut ipsa sint distinctio quod itaque nam qui. Possimus aut unde id architecto voluptatem hic aut pariatur velit.',
-    date: 'Dec 2022',
-    dateTime: '2022-12',
+      'Developed strategic partnerships with major African media outlets to enhance public engagement.',
+    date: '2024',
+    dateTime: '2024-04',
   },
-]
-const jobOpenings = [
-  {
-    id: 1,
-    role: 'Full-time designer',
-    href: '#',
-    description:
-      'Quos sunt ad dolore ullam qui. Enim et quisquam dicta molestias. Corrupti quo voluptatum eligendi autem labore.',
-    salary: '$75,000 USD',
-    location: 'San Francisco, CA',
-  },
-  {
-    id: 2,
-    role: 'Laravel developer',
-    href: '#',
-    description:
-      'Et veniam et officia dolorum rerum. Et voluptas consequatur magni sapiente amet voluptates dolorum. Ut porro aut eveniet.',
-    salary: '$125,000 USD',
-    location: 'San Francisco, CA',
-  },
-  {
-    id: 3,
-    role: 'React Native developer',
-    href: '#',
-    description:
-      'Veniam ipsam nisi quas architecto eos non voluptatem in nemo. Est occaecati nihil omnis delectus illum est.',
-    salary: '$105,000 USD',
-    location: 'San Francisco, CA',
-  },
-]
+];
 
+const values = [
+  {
+    name: 'Research Excellence',
+    description:
+      'Through rigorous analysis and innovative research methodologies, we investigate critical urban challenges across Africa, integrating multiple disciplines for comprehensive insights.',
+  },
+  {
+    name: 'Collaborative Approach',
+    description:
+      'We maintain extensive networks with research institutions, urban planning agencies, and civil society organizations across Africa, fostering meaningful partnerships for urban development.',
+  },
+  {
+    name: 'Knowledge Translation',
+    description:
+      'We excel at translating complex urban research into accessible knowledge, ensuring our insights reach diverse audiences from policymakers to community organizations.',
+  },
+  {
+    name: 'Implementation Focus',
+    description:
+      'We actively bridge the gap between research and practical implementation, working directly with city officials and urban planners to influence development decisions.',
+  },
+  {
+    name: 'Media Engagement',
+    description:
+      'Our strong relationships with media partners enable effective communication of urban development issues, fostering informed public dialogue about African cities\' future.',
+  },
+  {
+    name: 'Sustainable Impact',
+    description:
+      'We are committed to transforming how African cities are planned, built, and managed for the benefit of all urban residents through sustainable and equitable solutions.',
+  },
+];
 
 export default function About() {
-
-
   return (
     <div className="bg-white">
-
       <main className="isolate">
-
         <div className="relative isolate -z-10 overflow-hidden bg-linear-to-b from-indigo-100/20 pt-14">
-          <div
-            aria-hidden="true"
-            className="absolute inset-y-0 right-1/2 -z-10 -mr-96 w-[200%] origin-top-right skew-x-[-30deg] bg-white ring-1 shadow-xl shadow-indigo-600/10 ring-indigo-50 sm:-mr-80 lg:-mr-96"
-          />
           <div className="mx-auto max-w-7xl px-6 py-32 sm:py-40 lg:px-8">
             <div className="mx-auto max-w-2xl lg:mx-0 lg:grid lg:max-w-none lg:grid-cols-2 lg:gap-x-16 lg:gap-y-8 xl:grid-cols-1 xl:grid-rows-1 xl:gap-x-8">
-              {/* <h1 class="max-w-2xl text-balance text-5xl font-semibold tracking-tight text-gray-900 sm:text-7xl lg:col-span-2 xl:col-auto">We’re changing the way people connect</h1> */}
-              <h1 className="max-w-2xl text-5xl font-semibold tracking-tight text-balance text-gray-900 sm:text-7xl lg:col-span-2 xl:col-auto">
-                We’re a passionate group of people building the future of ecommerce
+              <h1 className="max-w-2xl text-5xl font-semibold tracking-tight text-balance text-maurc-orange sm:text-7xl lg:col-span-2 xl:col-auto">
+                A Premier Research Institution for African Urban Development
               </h1>
               <div className="mt-6 max-w-xl lg:mt-0 xl:col-end-1 xl:row-start-1">
                 <p className="text-lg font-medium text-pretty text-gray-500 sm:text-xl/8">
-                  Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt
-                  amet fugiat veniam occaecat fugiat aliqua. Anim aute id magna aliqua ad ad non deserunt sunt. Qui
-                  irure qui lorem cupidatat commodo.
+                  Through rigorous analysis and innovative research methodologies, we investigate critical urban 
+                  challenges across the continent, integrating multiple disciplines to provide comprehensive insights 
+                  into Africa's urban landscape.
                 </p>
               </div>
               <img
@@ -117,7 +110,7 @@ export default function About() {
                     className="absolute -ml-2 h-px w-screen -translate-x-full bg-gray-900/10 sm:-ml-4 lg:static lg:-mr-6 lg:ml-8 lg:w-auto lg:flex-auto lg:translate-x-0"
                   />
                 </time>
-                <p className="mt-6 text-lg/8 font-semibold tracking-tight text-gray-900">{item.name}</p>
+                <p className="mt-6 text-lg/8 font-semibold tracking-tight text-maurc-orange">{item.name}</p>
                 <p className="mt-1 text-base/7 text-gray-600">{item.description}</p>
               </div>
             ))}
@@ -183,12 +176,34 @@ export default function About() {
           </div>
         </div>
 
+        {/* Values section */}
+        <div className="mx-auto mt-32 max-w-7xl px-6 sm:mt-40 lg:px-8">
+          <div className="mx-auto max-w-2xl lg:mx-0">
+            <h2 className="text-4xl font-semibold tracking-tight text-pretty text-maurc-orange sm:text-5xl">
+              What Sets Us Apart
+            </h2>
+            <p className="mt-6 text-lg/8 text-gray-600">
+              Our commitment to bridging the gap between research and practical implementation sets us apart. 
+              We actively engage with stakeholders at all levels to ensure our research directly influences 
+              urban development decisions.
+            </p>
+          </div>
+          <dl className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 text-base/7 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+            {values.map((value) => (
+              <div key={value.name}>
+                <dt className="font-semibold text-maurc-orange">{value.name}</dt>
+                <dd className="mt-1 text-gray-600">{value.description}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+
         {/* Content section */}
         <div className="mt-32 overflow-hidden sm:mt-40">
           <div className="mx-auto max-w-7xl px-6 lg:flex lg:px-8">
             <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-12 gap-y-16 lg:mx-0 lg:max-w-none lg:min-w-full lg:flex-none lg:gap-y-8">
               <div className="lg:col-end-1 lg:w-full lg:max-w-lg lg:pb-8">
-                <h2 className="text-4xl font-semibold tracking-tight text-gray-900 sm:text-5xl">Our people</h2>
+                <h2 className="text-4xl font-semibold tracking-tight text-maurc-orange sm:text-5xl">Our people</h2>
                 <p className="mt-6 text-xl/8 text-gray-600">
                   Quasi est quaerat. Sit molestiae et. Provident ad dolorem occaecati eos iste. Soluta rerum quidem
                   minus ut molestiae velit error quod. Excepturi quidem expedita molestias quas.
@@ -233,104 +248,7 @@ export default function About() {
             </div>
           </div>
         </div>
-
-        {/* Stats */}
-        <div className="mx-auto mt-32 max-w-7xl px-6 sm:mt-40 lg:px-8">
-          <div className="mx-auto max-w-2xl lg:mx-0">
-            <h2 className="text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl">
-              We approach work as a place to make the world better
-            </h2>
-            <p className="mt-6 text-base/7 text-gray-600">
-              Diam nunc lacus lacus aliquam turpis enim. Eget hac velit est euismod lacus. Est non placerat nam arcu.
-              Cras purus nibh cursus sit eu in id. Integer vel nibh.
-            </p>
-          </div>
-          <div className="mx-auto mt-16 flex max-w-2xl flex-col gap-8 lg:mx-0 lg:mt-20 lg:max-w-none lg:flex-row lg:items-end">
-            <div className="flex flex-col-reverse justify-between gap-x-16 gap-y-8 rounded-2xl bg-gray-50 p-8 sm:w-3/4 sm:max-w-md sm:flex-row-reverse sm:items-end lg:w-72 lg:max-w-none lg:flex-none lg:flex-col lg:items-start">
-              <p className="flex-none text-3xl font-bold tracking-tight text-gray-900">250k</p>
-              <div className="sm:w-80 sm:shrink lg:w-auto lg:flex-none">
-                <p className="text-lg font-semibold tracking-tight text-gray-900">Users on the platform</p>
-                <p className="mt-2 text-base/7 text-gray-600">Vel labore deleniti veniam consequuntur sunt nobis.</p>
-              </div>
-            </div>
-            <div className="flex flex-col-reverse justify-between gap-x-16 gap-y-8 rounded-2xl bg-gray-900 p-8 sm:flex-row-reverse sm:items-end lg:w-full lg:max-w-sm lg:flex-auto lg:flex-col lg:items-start lg:gap-y-44">
-              <p className="flex-none text-3xl font-bold tracking-tight text-white">$8.9 billion</p>
-              <div className="sm:w-80 sm:shrink lg:w-auto lg:flex-none">
-                <p className="text-lg font-semibold tracking-tight text-white">
-                  We’re proud that our customers have made over $8 billion in total revenue.
-                </p>
-                <p className="mt-2 text-base/7 text-gray-400">
-                  Eu duis porta aliquam ornare. Elementum eget magna egestas.
-                </p>
-              </div>
-            </div>
-            <div className="flex flex-col-reverse justify-between gap-x-16 gap-y-8 rounded-2xl bg-indigo-600 p-8 sm:w-11/12 sm:max-w-xl sm:flex-row-reverse sm:items-end lg:w-full lg:max-w-none lg:flex-auto lg:flex-col lg:items-start lg:gap-y-28">
-              <p className="flex-none text-3xl font-bold tracking-tight text-white">401,093</p>
-              <div className="sm:w-80 sm:shrink lg:w-auto lg:flex-none">
-                <p className="text-lg font-semibold tracking-tight text-white">Transactions this year</p>
-                <p className="mt-2 text-base/7 text-indigo-200">
-                  Eu duis porta aliquam ornare. Elementum eget magna egestas. Eu duis porta aliquam ornare.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Content section */}
-        <div className="mx-auto mt-32 max-w-7xl px-6 sm:mt-40 lg:px-8">
-          <div className="mx-auto flex max-w-2xl flex-col items-end justify-between gap-16 lg:mx-0 lg:max-w-none lg:flex-row">
-            <div className="w-full lg:max-w-lg lg:flex-auto">
-              <h2 className="text-3xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-4xl">
-                We’re always looking for awesome people to join us
-              </h2>
-              <p className="mt-6 text-xl/8 text-gray-600">
-                Diam nunc lacus lacus aliquam turpis enim. Eget hac velit est euismod lacus. Est non placerat nam arcu.
-                Cras purus nibh cursus sit eu in id.
-              </p>
-              <img
-                alt=""
-                src="https://images.unsplash.com/photo-1606857521015-7f9fcf423740?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1344&h=1104&q=80"
-                className="mt-16 aspect-6/5 w-full rounded-2xl bg-gray-50 object-cover lg:aspect-auto lg:h-[34.5rem]"
-              />
-            </div>
-            <div className="w-full lg:max-w-xl lg:flex-auto">
-              <h3 className="sr-only">Job openings</h3>
-              <ul className="-my-8 divide-y divide-gray-100">
-                {jobOpenings.map((opening) => (
-                  <li key={opening.id} className="py-8">
-                    <dl className="relative flex flex-wrap gap-x-3">
-                      <dt className="sr-only">Role</dt>
-                      <dd className="w-full flex-none text-lg font-semibold tracking-tight text-gray-900">
-                        <a href={opening.href}>
-                          {opening.role}
-                          <span aria-hidden="true" className="absolute inset-0" />
-                        </a>
-                      </dd>
-                      <dt className="sr-only">Description</dt>
-                      <dd className="mt-2 w-full flex-none text-base/7 text-gray-600">{opening.description}</dd>
-                      <dt className="sr-only">Salary</dt>
-                      <dd className="mt-4 text-base/7 font-semibold text-gray-900">{opening.salary}</dd>
-                      <dt className="sr-only">Location</dt>
-                      <dd className="mt-4 flex items-center gap-x-3 text-base/7 text-gray-500">
-                        <svg viewBox="0 0 2 2" aria-hidden="true" className="size-0.5 flex-none fill-gray-300">
-                          <circle r={1} cx={1} cy={1} />
-                        </svg>
-                        {opening.location}
-                      </dd>
-                    </dl>
-                  </li>
-                ))}
-              </ul>
-              <div className="mt-8 flex border-t border-gray-100 pt-8">
-                <a href="#" className="text-sm/6 font-semibold text-indigo-600 hover:text-indigo-500">
-                  View all openings <span aria-hidden="true">&rarr;</span>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
       </main>
-
     </div>
   )
 }
