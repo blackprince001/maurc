@@ -1,8 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
-// Example data type based on the schema
 type Publication = {
   title: string
   abstract: string
@@ -15,29 +14,8 @@ type Publication = {
   url: string
   pdf_link: string
   id: number
-  user_id: number
 }
 
-// Example publications array (this would come from your API)
-const examplePublications: Publication[] = [
-  {
-    title: "Urban Climate Resilience in African Coastal Cities",
-    abstract: "This study examines the challenges and opportunities in building climate resilience in rapidly growing African coastal urban areas, with a focus on adaptive infrastructure and community engagement.",
-    authors: "John Doe, Jane Smith, Robert Johnson",
-    publication_type: "Journal Article",
-    journal: "African Urban Studies Review",
-    conference: "",
-    year: 2024,
-    doi: "10.1234/aus.2024.001",
-    url: "https://example.com/publication1",
-    pdf_link: "#",
-    id: 1,
-    user_id: 1
-  },
-  // Add more example publications as needed
-]
-
-// Filter options for publication types
 const publicationTypes = [
   { id: 'all', name: 'All Publications' },
   { id: 'journal', name: 'Journal Articles' },
@@ -47,8 +25,43 @@ const publicationTypes = [
 ]
 
 export default function Publications() {
+  const [publications, setPublications] = useState<Publication[]>([])
   const [selectedType, setSelectedType] = useState('all')
   const [searchQuery, setSearchQuery] = useState('')
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    const fetchPublications = async () => {
+      try {
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000'
+        const response = await fetch(`${apiUrl}/publications/`)
+        if (!response.ok) {
+          throw new Error('Failed to fetch publications')
+        }
+        const data = await response.json()
+        setPublications(data)
+        setError(null)
+      } catch (err) {
+        setError('Failed to load publications. Please try again later.')
+        console.error('Error fetching publications:', err)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchPublications()
+  }, [])
+
+  // Filter publications based on selected type and search query
+  const filteredPublications = publications.filter(pub => {
+    const matchesType = selectedType === 'all' || pub.publication_type.toLowerCase() === selectedType
+    const matchesSearch = searchQuery === '' || 
+      pub.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      pub.authors.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      pub.abstract.toLowerCase().includes(searchQuery.toLowerCase())
+    return matchesType && matchesSearch
+  })
 
   return (
     <div className="bg-white">
@@ -115,69 +128,88 @@ export default function Publications() {
           </div>
         </div>
 
+        {/* Loading and Error States */}
+        {isLoading && (
+          <div className="mt-8 text-center text-gray-600">
+            Loading publications...
+          </div>
+        )}
+
+        {error && (
+          <div className="mt-8 text-center text-red-600">
+            {error}
+          </div>
+        )}
+
         {/* Publications List */}
-        <div className="mt-8 space-y-8">
-          {examplePublications.map((publication) => (
-            <div
-              key={publication.id}
-              className="rounded-lg bg-white p-6 shadow-sm ring-1 ring-gray-900/5"
-            >
-              <div className="flex items-start justify-between">
-                <div className="flex-1">
-                  <h3 className="text-lg font-semibold leading-7 text-maurc-orange">
-                    {publication.title}
-                  </h3>
-                  <p className="mt-2 text-sm text-gray-500">
-                    {publication.authors}
-                  </p>
-                  <p className="mt-4 text-sm text-gray-600">
-                    {publication.abstract}
-                  </p>
-                  <div className="mt-4 flex flex-wrap gap-4">
-                    <span className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700">
-                      {publication.publication_type}
-                    </span>
-                    <span className="inline-flex items-center text-sm text-gray-500">
-                      {publication.journal || publication.conference}
-                    </span>
-                    <span className="inline-flex items-center text-sm text-gray-500">
-                      {publication.year}
-                    </span>
+        {!isLoading && !error && (
+          <div className="mt-8 space-y-8">
+            {filteredPublications.map((publication) => (
+              <div
+                key={publication.id}
+                className="rounded-lg bg-white p-6 shadow-sm ring-1 ring-gray-900/5"
+              >
+                <div className="flex items-start justify-between">
+                  <div className="flex-1">
+                    <h3 className="text-lg font-semibold leading-7 text-maurc-orange">
+                      {publication.title}
+                    </h3>
+                    <p className="mt-2 text-sm text-gray-500">
+                      {publication.authors}
+                    </p>
+                    <p className="mt-4 text-sm text-gray-600">
+                      {publication.abstract}
+                    </p>
+                    <div className="mt-4 flex flex-wrap gap-4">
+                      <span className="inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700">
+                        {publication.publication_type}
+                      </span>
+                      <span className="inline-flex items-center text-sm text-gray-500">
+                        {publication.journal || publication.conference}
+                      </span>
+                      <span className="inline-flex items-center text-sm text-gray-500">
+                        {publication.year}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="ml-4 flex shrink-0 space-x-4">
+                    {publication.pdf_link && (
+                      <a
+                        href={publication.pdf_link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-x-1.5 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                      >
+                        <svg className="-ml-0.5 h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                          <path d="M10.75 2.75a.75.75 0 00-1.5 0v8.614L6.295 8.235a.75.75 0 10-1.09 1.03l4.25 4.5a.75.75 0 001.09 0l4.25-4.5a.75.75 0 00-1.09-1.03l-2.955 3.129V2.75z" />
+                          <path d="M3.5 12.75a.75.75 0 00-1.5 0v2.5A2.75 2.75 0 004.75 18h10.5A2.75 2.75 0 0018 15.25v-2.5a.75.75 0 00-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5z" />
+                        </svg>
+                        PDF
+                      </a>
+                    )}
+                    {publication.doi && (
+                      <a
+                        href={`https://doi.org/${publication.doi}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-maurc-orange shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                      >
+                        DOI
+                      </a>
+                    )}
                   </div>
                 </div>
-                <div className="ml-4 flex shrink-0 space-x-4">
-                  {publication.pdf_link && (
-                    <button
-                      type="button"
-                      className="inline-flex items-center gap-x-1.5 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                    >
-                      <svg className="-ml-0.5 h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M10.75 2.75a.75.75 0 00-1.5 0v8.614L6.295 8.235a.75.75 0 10-1.09 1.03l4.25 4.5a.75.75 0 001.09 0l4.25-4.5a.75.75 0 00-1.09-1.03l-2.955 3.129V2.75z" />
-                        <path d="M3.5 12.75a.75.75 0 00-1.5 0v2.5A2.75 2.75 0 004.75 18h10.5A2.75 2.75 0 0018 15.25v-2.5a.75.75 0 00-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5z" />
-                      </svg>
-                      PDF
-                    </button>
-                  )}
-                  {publication.doi && (
-                    <button
-                      type="button"
-                      className="inline-flex items-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-maurc-orange shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                    >
-                      DOI
-                    </button>
-                  )}
-                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
 
-        {/* Pagination (can be implemented based on your needs) */}
-        <div className="mt-8 flex justify-center">
-          <nav className="flex items-center justify-between border-t border-gray-200 px-4 sm:px-0">
-            {/* Pagination controls can be added here */}
-          </nav>
-        </div>
+        {/* Empty State */}
+        {!isLoading && !error && filteredPublications.length === 0 && (
+          <div className="mt-8 text-center text-gray-600">
+            No publications found matching your criteria.
+          </div>
+        )}
       </div>
     </div>
   )

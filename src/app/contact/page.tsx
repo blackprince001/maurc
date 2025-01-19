@@ -97,14 +97,6 @@ export default function Contact() {
                   <p>Accra, Ghana</p>
                 </address>
               </div>
-              <div className="rounded-2xl bg-gray-50 p-10">
-                <h3 className="text-base/7 font-semibold text-maurc-orange">East Africa Office</h3>
-                <address className="mt-3 space-y-1 text-sm/6 text-gray-600 not-italic">
-                  <p>MAURC East Africa</p>
-                  <p>Research & Innovation Center</p>
-                  <p>Nairobi, Kenya</p>
-                </address>
-              </div>
             </div>
           </div>
         </div>
