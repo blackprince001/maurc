@@ -20,8 +20,8 @@ const publicationTypes = [
   { id: 'all', name: 'All Publications' },
   { id: 'journal', name: 'Journal Articles' },
   { id: 'conference', name: 'Conference Papers' },
-  { id: 'report', name: 'Research Reports' },
-  { id: 'policy', name: 'Policy Briefs' }
+  { id: 'research_report', name: 'Research Reports' },
+  { id: 'policy_brief', name: 'Policy Briefs' }
 ]
 
 export default function Publications() {
