@@ -44,7 +44,7 @@ const api = axios.create({
   },
 });
 
-export const organization = {
+const organization = {
   // Centers
   getCenters: async () => {
     const response = await api.get('/organization/centers/');

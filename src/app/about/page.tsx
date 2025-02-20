@@ -92,7 +92,7 @@ const api = axios.create({
   },
 });
 
-export const profiles = {
+const profiles = {
   getProfiles: async () => {
     const response = await api.get(`/profiles/`);
     return response.data;
