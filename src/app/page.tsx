@@ -1,3 +1,5 @@
+import { PublicationsPreview } from "@/components/publication-preview";
+
 const stats = [
   { label: 'Research Projects Completed', value: '150+' },
   { label: 'African Cities Studied', value: '45+' },
@@ -38,15 +40,6 @@ const values = [
   },
 ];
 
-const team = [
-  {
-    name: 'Michael Appiah-Kubi',
-    role: 'Founder',
-    imageUrl:
-      'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80',
-  },
-  // More people...
-]
 
 
 export default function Example() {
@@ -99,8 +92,8 @@ export default function Example() {
                     Shaping the Future of African Cities
                   </h1>
                   <p className="mt-8 text-lg font-medium text-pretty text-gray-500 sm:max-w-md sm:text-xl/8 lg:max-w-none">
-                    MAFLO African Urban Research Center (MAURC) is a premier research institution dedicated to 
-                    understanding and shaping the future of African cities. Through rigorous research and strategic 
+                    MAFLO African Urban Research Center (MAURC) is a premier research institution dedicated to
+                    understanding and shaping the future of African cities. Through rigorous research and strategic
                     partnerships, we're working to create sustainable, equitable, and resilient urban environments.
                   </p>
                 </div>
@@ -156,28 +149,30 @@ export default function Example() {
             <div className="mt-6 flex flex-col gap-x-8 gap-y-20 lg:flex-row">
               <div className="lg:w-full lg:max-w-2xl lg:flex-auto">
                 <p className="text-xl/8 text-gray-600">
-                  We investigate critical urban challenges across the continent, from rapid urbanization and infrastructure 
-                  development to climate resilience and social equity. Our work spans multiple disciplines, integrating 
+                  We investigate critical urban challenges across the continent, from rapid urbanization and infrastructure
+                  development to climate resilience and social equity. Our work spans multiple disciplines, integrating
                   urban planning, social sciences, environmental studies, and policy analysis.
                 </p>
                 <p className="mt-10 max-w-xl text-base/7 text-gray-700">
-                  Through our collaborative approach and commitment to excellence, we've become a trusted voice in shaping 
-                  sustainable urban futures across Africa. We actively engage with city officials, urban planners, and 
+                  Through our collaborative approach and commitment to excellence, we've become a trusted voice in shaping
+                  sustainable urban futures across Africa. We actively engage with city officials, urban planners, and
                   community leaders to ensure our research directly influences urban development decisions.
                 </p>
               </div>
-              <div className="lg:flex lg:flex-auto lg:justify-center">
-                <dl className="w-64 space-y-8 xl:w-80">
-                  {stats.map((stat) => (
-                    <div key={stat.label} className="flex flex-col-reverse gap-y-4">
-                      <dt className="text-base/7 text-maurc-orange">{stat.label}</dt>
-                      <dd className="text-5xl font-semibold tracking-tight text-maurc-orange">{stat.value}</dd>
-                    </div>
-                  ))}
-                </dl>
-              </div>
             </div>
           </div>
+        </div>
+
+        <div className="mx-auto mt-32 max-w-7xl px-6 sm:mt-40 lg:px-8">
+          <div className="mx-auto max-w-2xl lg:mx-0">
+            <h2 className="text-4xl font-semibold tracking-tight text-pretty text-maurc-orange sm:text-5xl">
+              Latest Research
+            </h2>
+            <p className="mt-6 text-lg leading-8 text-gray-600">
+              Explore our recent publications and research findings that are shaping urban development across Africa.
+            </p>
+          </div>
+          <PublicationsPreview />
         </div>
 
         {/* Image section */}
@@ -202,29 +197,6 @@ export default function Example() {
               </div>
             ))}
           </dl>
-        </div>
-
-        {/* Team section */}
-        <div className="mx-auto mt-32 max-w-7xl px-6 sm:mt-48 lg:px-8">
-          <div className="mx-auto max-w-2xl lg:mx-0">
-            <h2 className="text-4xl font-semibold tracking-tight text-pretty text-maurc-orange sm:text-5xl">Our team</h2>
-            <p className="mt-6 text-lg/8 text-gray-600">
-              We're a dynamic group of individuals who are passionate about what we do and dedicated to delivering the
-              best results for our clients.
-            </p>
-          </div>
-          <ul
-            role="list"
-            className="mx-auto mt-20 grid max-w-2xl grid-cols-2 gap-x-8 gap-y-16 text-center sm:grid-cols-3 md:grid-cols-4 lg:mx-0 lg:max-w-none lg:grid-cols-5 xl:grid-cols-6"
-          >
-            {team.map((person) => (
-              <li key={person.name}>
-                <img alt="" src={person.imageUrl} className="mx-auto size-24 rounded-full" />
-                <h3 className="mt-6 text-base/7 font-semibold tracking-tight text-maurc-orange">{person.name}</h3>
-                <p className="text-sm/6 text-gray-600">{person.role}</p>
-              </li>
-            ))}
-          </ul>
         </div>
       </main>
     </div>
