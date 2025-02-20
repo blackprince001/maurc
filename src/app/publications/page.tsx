@@ -2,20 +2,22 @@
 
 import { useState, useEffect } from 'react'
 
-type Publication = {
-  title: string
-  abstract: string
-  authors: string
-  publication_type: string
-  journal: string
-  conference: string
-  year: number
-  doi: string
-  url: string
-  pdf_link: string
-  id: number
-  is_org: boolean
-  poster: string
+export interface Publication {
+  id: number;
+  user_id: number;
+  title: string;
+  abstract: string;
+  authors: string;
+  publication_type: string;
+  journal?: string;
+  conference?: string;
+  year: number;
+  doi?: string;
+  is_org: boolean;
+  poster?: string;
+  paper_summary?: string;
+  url?: string;
+  pdf_link?: string;
 }
 
 const publicationTypes = [
@@ -156,6 +158,22 @@ export default function Publications() {
                     )}
                   </div>
                 </div>
+                {publication.paper_summary && (
+                  <div className="border-t pt-4">
+                    <div className="max-2xl">
+                      <center className="text-sm text-maurc-orange mb-2">Audio Summary</center>
+                      <iframe
+                        className='py-2 px-2'
+                        width="100%"
+                        height="166"
+                        scrolling="no"
+                        frameBorder="no"
+                        allow="autoplay"
+                        src={`https://w.soundcloud.com/player/?url=${encodeURIComponent(publication.paper_summary)}&color=%23ff5500&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false`}
+                      ></iframe>
+                    </div>
+                  </div>
+                )}
               </div>
             ))}
           </div>
