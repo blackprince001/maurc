@@ -1,5 +1,8 @@
 'use client'
 
+import axios from "axios";
+import { useState, useEffect } from "react";
+
 const timeline = [
   {
     name: 'Establishment of MAURC',
@@ -64,7 +67,79 @@ const values = [
   },
 ];
 
+export interface Profile {
+  id: number;
+  user_id: string;
+  name: string;
+  org_role: 'advisory' | 'team' | 'fellow';
+  home_content?: string[];
+  cv_link?: string;
+  profile_image?: string;
+  projects: {
+    title: string;
+    description: string;
+    url: string;
+  }[];
+  teachings: string[];
+}
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
+const api = axios.create({
+  baseURL: API_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+export const profiles = {
+  getProfiles: async () => {
+    const response = await api.get(`/profiles/`);
+    return response.data;
+  },
+}
+
 export default function About() {
+  const [teamMembers, setTeamMembers] = useState<{
+    advisory: Profile[];
+    team: Profile[];
+    fellow: Profile[];
+  }>({
+    advisory: [],
+    team: [],
+    fellow: []
+  });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProfiles = async () => {
+      try {
+        const allProfiles = await profiles.getProfiles();
+
+        // Group profiles by role
+        const grouped = allProfiles.reduce((acc: { [x: string]: any[]; }, profile: { org_role: string | number; }) => {
+          if (!acc[profile.org_role]) {
+            acc[profile.org_role] = [];
+          }
+          acc[profile.org_role].push(profile);
+          return acc;
+        }, {
+          advisory: [],
+          team: [],
+          fellow: []
+        });
+
+        setTeamMembers(grouped);
+      } catch (error) {
+        console.error('Error fetching profiles:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProfiles();
+  }, []);
+
   return (
     <div className="bg-white">
       <main className="isolate">
@@ -76,8 +151,8 @@ export default function About() {
               </h1>
               <div className="mt-6 max-w-xl lg:mt-0 xl:col-end-1 xl:row-start-1">
                 <p className="text-lg font-medium text-pretty text-gray-500 sm:text-xl/8">
-                  Through rigorous analysis and innovative research methodologies, we investigate critical urban 
-                  challenges across the continent, integrating multiple disciplines to provide comprehensive insights 
+                  Through rigorous analysis and innovative research methodologies, we investigate critical urban
+                  challenges across the continent, integrating multiple disciplines to provide comprehensive insights
                   into Africa's urban landscape.
                 </p>
               </div>
@@ -120,8 +195,8 @@ export default function About() {
               What Sets Us Apart
             </h2>
             <p className="mt-6 text-lg/8 text-gray-600">
-              Our commitment to bridging the gap between research and practical implementation sets us apart. 
-              We actively engage with stakeholders at all levels to ensure our research directly influences 
+              Our commitment to bridging the gap between research and practical implementation sets us apart.
+              We actively engage with stakeholders at all levels to ensure our research directly influences
               urban development decisions.
             </p>
           </div>
@@ -139,18 +214,18 @@ export default function About() {
         <div className="mt-32 overflow-hidden sm:mt-40">
           <div className="mx-auto max-w-7xl px-6 lg:flex lg:px-8">
             <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-12 gap-y-16 lg:mx-0 lg:max-w-none lg:min-w-full lg:flex-none lg:gap-y-8">
-            <div className="lg:col-end-1 lg:w-full lg:max-w-lg lg:pb-8">
-              <h2 className="text-4xl font-semibold tracking-tight text-maurc-orange sm:text-5xl">Our People</h2>
-              <p className="mt-6 text-xl/8 text-gray-600">
-                Our diverse team of researchers, academics, and practitioners brings together expertise from urban planning, 
-                environmental science, social development, and policy analysis to address the complex challenges facing African cities.
-              </p>
-              <p className="mt-6 text-base/7 text-gray-600">
-                From early-career researchers to seasoned experts, our community is united by a shared commitment to sustainable 
-                urban development in Africa. We believe in fostering collaboration across disciplines and borders, supporting the 
-                next generation of urban scholars, and ensuring our research creates meaningful impact in communities.
-              </p>
-            </div>
+              <div className="lg:col-end-1 lg:w-full lg:max-w-lg lg:pb-8">
+                <h2 className="text-4xl font-semibold tracking-tight text-maurc-orange sm:text-5xl">Our People</h2>
+                <p className="mt-6 text-xl/8 text-gray-600">
+                  Our diverse team of researchers, academics, and practitioners brings together expertise from urban planning,
+                  environmental science, social development, and policy analysis to address the complex challenges facing African cities.
+                </p>
+                <p className="mt-6 text-base/7 text-gray-600">
+                  From early-career researchers to seasoned experts, our community is united by a shared commitment to sustainable
+                  urban development in Africa. We believe in fostering collaboration across disciplines and borders, supporting the
+                  next generation of urban scholars, and ensuring our research creates meaningful impact in communities.
+                </p>
+              </div>
               <div className="flex flex-wrap items-start justify-end gap-6 sm:gap-8 lg:contents">
                 <div className="w-0 flex-auto lg:ml-auto lg:w-auto lg:flex-none lg:self-end">
                   <img
@@ -185,6 +260,91 @@ export default function About() {
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Team section */}
+        <div className="mx-auto mt-32 max-w-7xl px-6 sm:mt-48 lg:px-8">
+          <div className="mx-auto max-w-2xl lg:mx-0">
+            <h2 className="text-4xl font-semibold tracking-tight text-pretty text-maurc-orange sm:text-5xl">
+              Our Team
+            </h2>
+            <p className="mt-6 text-lg/8 text-gray-600">
+              We're a dynamic group of individuals who are passionate about what we do and dedicated to delivering the
+              best results for our research and community engagement.
+            </p>
+          </div>
+
+          {/* Advisory Board */}
+          {teamMembers.advisory.length > 0 && (
+            <div className="mt-20">
+              <h3 className="text-2xl font-semibold text-maurc-orange mb-12">Advisory Board</h3>
+              <ul
+                role="list"
+                className="mx-auto grid max-w-2xl grid-cols-2 gap-x-8 gap-y-16 text-center sm:grid-cols-3 md:grid-cols-4 lg:mx-0 lg:max-w-none lg:grid-cols-5 xl:grid-cols-6"
+              >
+                {teamMembers.advisory.map((person) => (
+                  <li key={person.id}>
+                    <img
+                      src={person.profile_image || "/placeholder.svg?height=96&width=96"}
+                      alt={person.name}
+                      className="mx-auto size-24 rounded-full object-cover"
+                    />
+                    <h3 className="mt-6 text-base/7 font-semibold tracking-tight text-maurc-orange">
+                      {person.name}
+                    </h3>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* Core Team */}
+          {teamMembers.team.length > 0 && (
+            <div className="mt-20">
+              <h3 className="text-2xl font-semibold text-maurc-orange mb-12">Core Team</h3>
+              <ul
+                role="list"
+                className="mx-auto grid max-w-2xl grid-cols-2 gap-x-8 gap-y-16 text-center sm:grid-cols-3 md:grid-cols-4 lg:mx-0 lg:max-w-none lg:grid-cols-5 xl:grid-cols-6"
+              >
+                {teamMembers.team.map((person) => (
+                  <li key={person.id}>
+                    <img
+                      src={person.profile_image || "/placeholder.svg?height=96&width=96"}
+                      alt={person.name}
+                      className="mx-auto size-24 rounded-full object-cover"
+                    />
+                    <h3 className="mt-6 text-base/7 font-semibold tracking-tight text-maurc-orange">
+                      {person.name}
+                    </h3>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* Fellows */}
+          {teamMembers.fellow.length > 0 && (
+            <div className="mt-20">
+              <h3 className="text-2xl font-semibold text-maurc-orange mb-12">Research Fellows</h3>
+              <ul
+                role="list"
+                className="mx-auto grid max-w-2xl grid-cols-2 gap-x-8 gap-y-16 text-center sm:grid-cols-3 md:grid-cols-4 lg:mx-0 lg:max-w-none lg:grid-cols-5 xl:grid-cols-6"
+              >
+                {teamMembers.fellow.map((person) => (
+                  <li key={person.id}>
+                    <img
+                      src={person.profile_image || "/placeholder.svg?height=96&width=96"}
+                      alt={person.name}
+                      className="mx-auto size-24 rounded-full object-cover"
+                    />
+                    <h3 className="mt-6 text-base/7 font-semibold tracking-tight text-maurc-orange">
+                      {person.name}
+                    </h3>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
       </main>
     </div>
